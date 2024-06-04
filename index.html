@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <title>MeshVPR</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>
+        MeshVPR<br />
+        <span class="sub"
+          >Citywide Visual Place Recognition Using 3D Meshes
+        </span>
+      </h1>
+    </header>
+    <main>
+      <section class="sec-video">
+        <iframe
+          class="full-width-video"
+          src="https://www.youtube-nocookie.com/embed/rWF-LfsDJKA"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </section>
+      <section class="sec-abstract">
+        <h2>Abstract</h2>
+        Mesh-based scene representation offers a promising direction for
+        simplifying large-scale hierarchical visual localization pipelines,
+        combining a visual place recognition step based on global features
+        (retrieval) and a visual localization step based on local features.
+        While existing work demonstrates the viability of meshes for visual
+        localization, the impact of using synthetic databases rendered from them
+        in visual place recognition remains largely unexplored. In this work we
+        investigate using dense 3D textured meshes for large-scale Visual Place
+        Recognition (VPR) and identify a significant performance drop when using
+        synthetic mesh-based databases compared to real-world images for
+        retrieval. To address this, we propose MeshVPR, a novel VPR pipeline
+        that utilizes a lightweight features alignment framework to bridge the
+        gap between real-world and synthetic domains. MeshVPR leverages
+        pre-trained VPR models and it is efficient and scalable for city-wide
+        deployments. We introduce novel datasets with freely available 3D meshes
+        and manually collected queries from Berlin, Paris, and Melbourne.
+        Extensive evaluations demonstrate that MeshVPR achieves competitive
+        performance with standard VPR pipelines, paving the way for mesh-based
+        localization systems. Our contributions include the new task of citywide
+        mesh-based VPR, the new benchmark datasets, MeshVPR, and a thorough
+        analysis of open challenges.
+      </section>
+
+      <section class="sec-pipeline">
+        <img src="assets/pipeline.jpg" alt="Teaser" />
+        <div class="sec-description">
+          <b>Our proposed pipeline for mesh-based visual place recognition.</b>
+          The training phase consists in downloading training (real) images and
+          the 3D mesh, generating their synthetic counterparts and specializing
+          the synthetic model through feature alignment. Once the training phase
+          is completed, the deployment phase can take part on any target city.
+        </div>
+      </section>
+      <section class="sec-results">
+        <h2>Example Results</h2>
+        <div class="example-queries">
+          <div class="example-query" onclick="setMap(this)">
+            <img
+              src="assets/examples/_10a6ddf4_query@52.49042@13.39269@success.jpg"
+              data-preds="assets/examples/_10a6ddf4@52.49045@13.39274@success.jpg;assets/examples/_10a6ddf4@52.49047@13.39262@success.jpg;assets/examples/_10a6ddf4@52.49049@13.39266@success.jpg;assets/examples/_10a6ddf4@52.53102@13.42728@_failure.jpg;assets/examples/_10a6ddf4@52.53114@13.42744@failure.jpg"
+            />
+          </div>
+          <div class="example-query" onclick="setMap(this)">
+            <img
+              src="assets/examples/_e6d4ef08_query@52.48753@13.38411@success.jpg"
+              data-preds="assets/examples/_e6d4ef08@52.48766@13.38397@success.jpg;assets/examples/_e6d4ef08@52.49720@13.34247@failure.jpg;assets/examples/_e6d4ef08@52.50317@13.45528@failure.jpg;assets/examples/_e6d4ef08@52.50319@13.45520@failure.jpg;assets/examples/_e6d4ef08@52.50351@13.45582@failure.jpg"
+            />
+          </div>
+          <div class="example-query" onclick="setMap(this)">
+            <img
+              src="assets/examples/_e81069c0_query@52.50439@13.38232@success.jpg"
+              data-preds="assets/examples/_e81069c0@52.50432@13.38236@success.jpg;assets/examples/_e81069c0@52.50439@13.38235@success.jpg;assets/examples/_e81069c0@52.50446@13.38226@success.jpg;assets/examples/_e81069c0@52.50457@13.38217@success.jpg;assets/examples/_e81069c0@52.51073@13.36871@failure.jpg"
+            />
+          </div>
+          <div class="example-query" onclick="setMap(this)">
+            <img
+              src="assets/examples/_faac82e7_query@52.49989@13.35393@success.jpg"
+              data-preds="assets/examples/_faac82e7@52.49981@13.34109@_failure.jpg;assets/examples/_faac82e7@52.49983@13.34124@failure.jpg;assets/examples/_faac82e7@52.49984@13.34128@failure.jpg;assets/examples/_faac82e7@52.49992@13.35389@success.jpg;assets/examples/_faac82e7@52.51958@13.37191@failure.jpg"
+            />
+          </div>
+        </div>
+        <div id="map"></div>
+        <br />
+        Results maybe overlapping zoom in to see them all. Click on on image in
+        the map to zoom in.
+      </section>
+    </main>
+  </body>
+  <script src="index.js"></script>
+</html>
