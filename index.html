@@ -1,102 +1,201 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>MeshVPR</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css"
-      rel="stylesheet"
-    />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
-  </head>
-  <body>
-    <header>
-      <h1>
-        MeshVPR<br />
-        <span class="sub"
-          >Citywide Visual Place Recognition Using 3D Meshes
-        </span>
-      </h1>
-    </header>
-    <main>
-      <section class="sec-video">
-        <iframe
-          class="full-width-video"
-          src="https://www.youtube-nocookie.com/embed/rWF-LfsDJKA"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
-      </section>
-      <section class="sec-abstract">
-        <h2>Abstract</h2>
-        Mesh-based scene representation offers a promising direction for
-        simplifying large-scale hierarchical visual localization pipelines,
-        combining a visual place recognition step based on global features
-        (retrieval) and a visual localization step based on local features.
-        While existing work demonstrates the viability of meshes for visual
-        localization, the impact of using synthetic databases rendered from them
-        in visual place recognition remains largely unexplored. In this work we
-        investigate using dense 3D textured meshes for large-scale Visual Place
-        Recognition (VPR) and identify a significant performance drop when using
-        synthetic mesh-based databases compared to real-world images for
-        retrieval. To address this, we propose MeshVPR, a novel VPR pipeline
-        that utilizes a lightweight features alignment framework to bridge the
-        gap between real-world and synthetic domains. MeshVPR leverages
-        pre-trained VPR models and it is efficient and scalable for city-wide
-        deployments. We introduce novel datasets with freely available 3D meshes
-        and manually collected queries from Berlin, Paris, and Melbourne.
-        Extensive evaluations demonstrate that MeshVPR achieves competitive
-        performance with standard VPR pipelines, paving the way for mesh-based
-        localization systems. Our contributions include the new task of citywide
-        mesh-based VPR, the new benchmark datasets, MeshVPR, and a thorough
-        analysis of open challenges.
-      </section>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="MeshVPR: Citywide Visual Place Recognition Using 3D Meshes">
+  <meta name="keywords" content="VPR, 3D, Mesh">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MeshVPR: Citywide Visual Place Recognition Using 3D Meshes</title>
 
-      <section class="sec-pipeline">
-        <img src="assets/pipeline.jpg" alt="Teaser" />
-        <div class="sec-description">
-          <b>Our proposed pipeline for mesh-based visual place recognition.</b>
-          The training phase consists in downloading training (real) images and
-          the 3D mesh, generating their synthetic counterparts and specializing
-          the synthetic model through feature alignment. Once the training phase
-          is completed, the deployment phase can take part on any target city.
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">MeshVPR: Citywide Visual Place Recognition Using 3D Meshes</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://gmberton.github.io/">Gabriele Berton</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a>Lorenz Junglas</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a>Riccardo Zaccone</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a>Thomas Pollok</a><sup>3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://vandal.polito.it/index.php/people/barbaracaputo/">Barbara Caputo</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.carlomasone.com/">Carlo Masone</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Polytechnic of Turin,</span>
+            <span class="author-block"><sup>2</sup>Karlsruhe Institute of Technology,</span>
+            <span class="author-block"><sup>3</sup>Fraunhofer IOSB</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2406.02776"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2406.02776"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=rWF-LfsDJKA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/meshvpr"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://github.com/meshvpr"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
         </div>
-      </section>
-      <section class="sec-results">
-        <h2>Example Results</h2>
-        <div class="example-queries">
-          <div class="example-query" onclick="setMap(this)">
-            <img
-              src="assets/examples/_10a6ddf4_query@52.49042@13.39269@success.jpg"
-              data-preds="assets/examples/_10a6ddf4@52.49045@13.39274@success.jpg;assets/examples/_10a6ddf4@52.49047@13.39262@success.jpg;assets/examples/_10a6ddf4@52.49049@13.39266@success.jpg;assets/examples/_10a6ddf4@52.53102@13.42728@_failure.jpg;assets/examples/_10a6ddf4@52.53114@13.42744@failure.jpg"
-            />
-          </div>
-          <div class="example-query" onclick="setMap(this)">
-            <img
-              src="assets/examples/_e6d4ef08_query@52.48753@13.38411@success.jpg"
-              data-preds="assets/examples/_e6d4ef08@52.48766@13.38397@success.jpg;assets/examples/_e6d4ef08@52.49720@13.34247@failure.jpg;assets/examples/_e6d4ef08@52.50317@13.45528@failure.jpg;assets/examples/_e6d4ef08@52.50319@13.45520@failure.jpg;assets/examples/_e6d4ef08@52.50351@13.45582@failure.jpg"
-            />
-          </div>
-          <div class="example-query" onclick="setMap(this)">
-            <img
-              src="assets/examples/_e81069c0_query@52.50439@13.38232@success.jpg"
-              data-preds="assets/examples/_e81069c0@52.50432@13.38236@success.jpg;assets/examples/_e81069c0@52.50439@13.38235@success.jpg;assets/examples/_e81069c0@52.50446@13.38226@success.jpg;assets/examples/_e81069c0@52.50457@13.38217@success.jpg;assets/examples/_e81069c0@52.51073@13.36871@failure.jpg"
-            />
-          </div>
-          <div class="example-query" onclick="setMap(this)">
-            <img
-              src="assets/examples/_faac82e7_query@52.49989@13.35393@success.jpg"
-              data-preds="assets/examples/_faac82e7@52.49981@13.34109@_failure.jpg;assets/examples/_faac82e7@52.49983@13.34124@failure.jpg;assets/examples/_faac82e7@52.49984@13.34128@failure.jpg;assets/examples/_faac82e7@52.49992@13.35389@success.jpg;assets/examples/_faac82e7@52.51958@13.37191@failure.jpg"
-            />
-          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content" style="text-align: center;">
+	  <img src="https://github.com/gmberton/gmberton.github.io/blob/96db6aa36b20d3a07f03e889ef82ec74370991cf/assets/MeshVPR/berlin_short_01.gif?raw=true" width="40%" />
+	  <img src="https://github.com/gmberton/gmberton.github.io/blob/96db6aa36b20d3a07f03e889ef82ec74370991cf/assets/MeshVPR/berlin_short_03.gif?raw=true" width="40%" />
+	  <img src="https://github.com/gmberton/gmberton.github.io/blob/96db6aa36b20d3a07f03e889ef82ec74370991cf/assets/MeshVPR/sf_short_01.gif?raw=true" width="40%" />
+	  <img src="https://github.com/gmberton/gmberton.github.io/blob/96db6aa36b20d3a07f03e889ef82ec74370991cf/assets/MeshVPR/sf_short_02.gif?raw=true" width="40%" />
         </div>
-        <div id="map"></div>
-        <br />
-        Results maybe overlapping zoom in to see them all. Click on on image in
-        the map to zoom in.
-      </section>
-    </main>
-  </body>
-  <script src="index.js"></script>
+      </div>
+    </div>
+    
+
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>Mesh-based scene representation offers a promising direction for simplifying large-scale hierarchical visual localization pipelines, combining a visual place recognition step based on global features (retrieval) and a visual localization step based on local features. While existing work demonstrates the viability of meshes for visual localization, the impact of using synthetic databases rendered from them in visual place recognition remains largely unexplored. In this work we investigate using dense 3D textured meshes for large-scale Visual Place Recognition (VPR) and identify a significant performance drop when using synthetic mesh-based databases compared to real-world images for retrieval. To address this, we propose MeshVPR, a novel VPR pipeline that utilizes a lightweight features alignment framework to bridge the gap between real-world and synthetic domains. MeshVPR leverages pre-trained VPR models and it is efficient and scalable for city-wide deployments. We introduce novel datasets with freely available 3D meshes and manually collected queries from Berlin, Paris, and Melbourne. Extensive evaluations demonstrate that MeshVPR achieves competitive performance with standard VPR pipelines, paving the way for mesh-based localization systems. Our contributions include the new task of citywide mesh-based VPR, the new benchmark datasets, MeshVPR, and a thorough analysis of open challenges. Data, code, and interactive visualizations are publicly available.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+  </div>
+</section>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{Berton_2024_MeshVPR,
+  title={MeshVPR: Citywide Visual Place Recognition Using 3D Meshes}, 
+  author={Gabriele Berton and Lorenz Junglas and Riccardo Zaccone and Thomas Pollok and Barbara Caputo and Carlo Masone},
+  year={2024},
+  eprint={2406.02776},
+  archivePrefix={arXiv},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>Template for the website taken from <a href="https://nerfies.github.io/">the nerfies website</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
 </html>
